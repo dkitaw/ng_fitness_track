@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { 
     MatButtonModule, 
     MatInputModule, 
-    MatFormFieldModule 
+    MatFormFieldModule, 
+    MatDatepickerModule,
+    MatNativeDateModule
 } from '@angular/material';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -11,14 +13,18 @@ import { MatIconModule } from '@angular/material/icon';
         MatButtonModule,
         MatIconModule,
         MatFormFieldModule,
-        MatInputModule
+        MatInputModule,
+        MatDatepickerModule,
+        MatNativeDateModule
         
     ],
     exports: [
         MatButtonModule,
         MatIconModule,
         MatFormFieldModule,
-        MatInputModule
+        MatInputModule,
+        MatDatepickerModule,
+        MatNativeDateModule
     ]                         // app-module will have access to all the modules exported in the material
 })
 export class MaterialModule {
