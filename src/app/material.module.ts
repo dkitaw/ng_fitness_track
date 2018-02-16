@@ -5,7 +5,9 @@ import {
     MatFormFieldModule, 
     MatDatepickerModule,
     MatNativeDateModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSidenavModule,
+    MatToolbarModule
 } from '@angular/material';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -17,7 +19,9 @@ import { MatIconModule } from '@angular/material/icon';
         MatInputModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        MatCheckboxModule        
+        MatCheckboxModule,
+        MatSidenavModule,
+        MatToolbarModule
     ],
     exports: [
         MatButtonModule,
@@ -26,7 +30,9 @@ import { MatIconModule } from '@angular/material/icon';
         MatInputModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatSidenavModule,
+        MatToolbarModule
     ]                         // app-module will have access to all the modules exported in the material
 })
 export class MaterialModule {
