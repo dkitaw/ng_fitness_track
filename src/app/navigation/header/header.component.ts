@@ -1,17 +1,25 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
+import { AuthService } from '../../auth/auth.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   /** listen to sidenavToggle */
   @Output() sidenavToggle = new EventEmitter<void>();
+  isAuth = false;
+  authSubscription: Subscription;
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
+    this.authSubscription = this.authService.authChange.subscribe(
+      authStatus => {
+        this.isAuth = authStatus;
+    });
   }
 
   /**
@@ -20,6 +28,15 @@ export class HeaderComponent implements OnInit {
    */
   onToggleSidenav() {
     this.sidenavToggle.emit();
+  }
+
+  /** 
+   * This clears up unneeded 
+   * memory because we no longer
+   * need that subscription.
+   */
+  ngOnDestroy() {
+    this.authSubscription.unsubscribe();
   }
 
 }
