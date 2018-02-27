@@ -21,6 +21,11 @@ export class SidenavListComponent implements OnInit {
     });
   }
 
+  onLogout() {
+    this.onClose();
+    this.authService.logout();
+  }
+
   onClose() {
     this.navItemsToggle.emit();
   }

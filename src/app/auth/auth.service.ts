@@ -2,17 +2,24 @@ import { User } from "./user.model";
 import { AuthData } from "./auth-data.model";
 
 import { Subject } from 'rxjs/Subject';
+import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
 
+@Injectable()
 export class AuthService {
-    authChange = new Subject<boolean>();       // This is same as EventEmitter
+    authChange = new Subject<boolean>();       // Subject is same as EventEmitter
     private user: User;
+
+    constructor(private router: Router) {
+
+    }
 
     registerUser(authData: AuthData) {
         this.user = {             
           email: authData.email,
           userId: Math.round(Math.random() * 10000).toString()
         };
-        this.authChange.next(true);      // emit true - that user is logged in
+       this.authSuccessfully();
     }
 
     login(authData: AuthData) {
@@ -20,7 +27,7 @@ export class AuthService {
             email: authData.email,
             userId: Math.round(Math.random() * 10000).toString()
         };
-        this.authChange.next(true);     // emit true - that user is logged in
+        this.authSuccessfully();
     }
 
     logout() {
@@ -42,5 +49,10 @@ export class AuthService {
      */
     isAuth() {
       return this.user != null;
+    }
+
+    private authSuccessfully() {
+        this.authChange.next(true);     // emit true - that user is logged in
+        this.router.navigate(['/training']);
     }
 }
