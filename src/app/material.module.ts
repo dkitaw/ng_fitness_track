@@ -15,7 +15,8 @@ import {
     MatProgressSpinnerModule,
     MatDialogModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    MatPaginatorModule
 } from '@angular/material';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -37,7 +38,8 @@ import { MatIconModule } from '@angular/material/icon';
         MatProgressSpinnerModule,
         MatDialogModule,
         MatTableModule,
-        MatSortModule
+        MatSortModule,
+        MatPaginatorModule
     ],
     exports: [
         MatButtonModule,
@@ -56,8 +58,10 @@ import { MatIconModule } from '@angular/material/icon';
         MatProgressSpinnerModule,
         MatDialogModule,
         MatTableModule,
-        MatSortModule
-    ]                         // app-module will have access to all the modules exported in the material
+        MatSortModule,
+        MatPaginatorModule
+        
+    ]                       
 })
 export class MaterialModule {
 
