@@ -34,7 +34,8 @@ export class TrainingService {
       });        
   }
 
-  startExercise(selectedId: string) {
+  startExercise(selectedId: string) { 
+   // this.db.doc('availableExercises/' + selectedId).update({lastSelected: new Date()});              // doc() is when we want to selec one single document, if we want then should call collection()
     this.runningExercise = this.availableExdercises.find(
       ex => ex.id === selectedId
     );
@@ -46,7 +47,7 @@ export class TrainingService {
       ...this.runningExercise, 
       date: new Date(), 
       state: 'completed'
-    });                                      // Push runningExercise to array before we set them to null and remove them
+    });                                            // Push runningExercise to array before we set them to null and remove them
     this.runningExercise = null;           
     this.exerciseChanged.next(null);         // This will mean we got no running exercise
   }
