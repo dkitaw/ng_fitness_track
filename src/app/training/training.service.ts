@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Exercise } from './exercise.model';
 import { Subject } from 'rxjs/Subject';
 import { AngularFirestore } from 'angularfire2/firestore';
+import { Subscription } from "rxjs";
 
 @Injectable()
 export class TrainingService {
@@ -11,11 +12,12 @@ export class TrainingService {
 
   private availableExdercises: Exercise[] = [];
   private runningExercise: Exercise;
+  private fbSubs: Subscription[] = [];
 
   constructor(private db: AngularFirestore) { }
 
   fetchAvailableExercises() {
-    this.db
+    this.fbSubs.push(this.db
       .collection('availableExercises')
       .snapshotChanges()                       // event lister which contain some metadata
       .map(docArray => {
@@ -31,7 +33,7 @@ export class TrainingService {
       .subscribe((exercises: Exercise[]) => {
         this.availableExdercises = exercises;
         this.exercisesChanged.next([...this.availableExdercises]);
-      });        
+      }));        
   }
 
   startExercise(selectedId: string) { 
@@ -69,11 +71,16 @@ export class TrainingService {
   }
 
   fetchCompletedOrCancelledExercises() {
-    this.db.collection('finishedExercises').valueChanges().subscribe(
-      (exercises: Exercise[]) => {
+    this.fbSubs.push(this.db
+    .collection('finishedExercises')
+    .valueChanges()
+    .subscribe((exercises: Exercise[]) => {
         this.finishedExercisesChanged.next(exercises);
-      }
-    );                                                              // valueChanges() give us array of document values without id of doc
+    }));                                                              // valueChanges() give us array of document values without id of doc
+  }
+
+  cancelSubscriptions() {
+    this.fbSubs.forEach(sub => sub.unsubscribe());
   }
 
   private addDataToDatabase(exercise: Exercise) {

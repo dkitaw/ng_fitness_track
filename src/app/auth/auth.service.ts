@@ -5,13 +5,38 @@ import { Subject } from 'rxjs/Subject';
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { AngularFireAuth } from 'angularfire2/auth';
+import { TrainingService } from '../training/training.service';
 
 @Injectable()
 export class AuthService {
   authChange = new Subject<boolean>();               // Subject is same as EventEmitter
   private isAuthenticated = false;
 
-  constructor(private router: Router, private afAuth: AngularFireAuth) { }
+  constructor(
+      private router: Router, 
+      private afAuth: AngularFireAuth,
+      private traningService: TrainingService
+    ) { }
+
+  /**
+   * It will emit an event
+   * whenever the authentication
+   * status changes.
+   */
+  initAuthListener() {
+    this.afAuth.authState.subscribe(user => {
+      if (user) {
+        this.isAuthenticated = true;
+        this.authChange.next(true);                 // emit true - that user is logged in
+        this.router.navigate(['/training']);
+      } else {
+          this.traningService.cancelSubscriptions();
+          this.authChange.next(false);              // emit false - that user is logout
+          this.router.navigate(['/login']);
+          this.isAuthenticated = false;
+      }
+    });
+  }
 
   registerUser(authData: AuthData) {
     this.afAuth.auth.createUserWithEmailAndPassword(
@@ -30,7 +55,7 @@ export class AuthService {
       authData.email, 
       authData.password
     ).then(result => {
-      this.authSuccessfully();
+      
     })
     .catch(error => {
       console.log(error);
@@ -38,9 +63,7 @@ export class AuthService {
   }
 
   logout() {
-    this.authChange.next(false);    // emit false - that user is logout
-    this.router.navigate(['/login']);
-    this.isAuthenticated = false;
+    this.afAuth.auth.signOut();
   }
 
   /**
@@ -53,8 +76,6 @@ export class AuthService {
   }
 
   private authSuccessfully() {
-    this.isAuthenticated = true;
-    this.authChange.next(true);             // emit true - that user is logged in
-    this.router.navigate(['/training']);
+    
   }
 }
