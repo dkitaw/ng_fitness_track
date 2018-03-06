@@ -5,6 +5,8 @@
     fxLayoutGap="10px" 
     [formGroup]="loginForm"
     (ngSubmit)="onSubmit()">
+
+    <!-- Email Input -->
     <mat-form-field>
       <input 
         matInput 
@@ -15,6 +17,7 @@
       <mat-error>Invalid or missing email.</mat-error>
     </mat-form-field>
 
+    <!-- Password Input -->
     <mat-form-field>
       <input 
         matInput 
@@ -25,10 +28,15 @@
       <mat-error>Invalid or missing password.</mat-error>
     </mat-form-field>
 
+    <!-- Login Button -->
     <button 
+      *ngIf="!isLoading" 
       type="submit" 
       mat-raised-button 
       [disabled]="loginForm.invalid" 
       color="primary">Login</button>
+    
+    <!-- Spinner -->
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
   </form>
 </section>

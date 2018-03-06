@@ -16,7 +16,8 @@ import {
     MatDialogModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSnackBarModule
 } from '@angular/material';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -39,7 +40,8 @@ import { MatIconModule } from '@angular/material/icon';
         MatDialogModule,
         MatTableModule,
         MatSortModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        MatSnackBarModule
     ],
     exports: [
         MatButtonModule,
@@ -59,7 +61,8 @@ import { MatIconModule } from '@angular/material/icon';
         MatDialogModule,
         MatTableModule,
         MatSortModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        MatSnackBarModule
         
     ]                       
 })

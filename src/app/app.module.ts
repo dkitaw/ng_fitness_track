@@ -23,6 +23,7 @@ import { StopTrainingComponent } from './training/stop-training/stop-training.co
 import { AuthService } from './auth/auth.service';
 import { TrainingService } from './training/training.service';
 import { environment } from '../environments/environment';
+import { UIService } from './shared/ui.service';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { environment } from '../environments/environment';
   ],
   providers: [
     AuthService,
-    TrainingService
+    TrainingService,
+    UIService
   ],
   bootstrap: [AppComponent],
   entryComponents: [StopTrainingComponent]      // This is an array where you have to add all components that are never instantiated by using their selector in your template not event by routing.
