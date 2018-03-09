@@ -13,9 +13,9 @@ import { UIService } from '../../shared/ui.service';
 })
 export class NewTrainingComponent implements OnInit, OnDestroy {
   exercises: Exercise[];
-  isLoading = false;
+  isLoading = true;
   private loadingSubs: Subscription;
-  exerciseSubscription: Subscription;
+  private exerciseSubscription: Subscription;
 
   constructor(private trainingService: TrainingService, private uiService: UIService) {  }
 
@@ -25,8 +25,14 @@ export class NewTrainingComponent implements OnInit, OnDestroy {
     });
 
     this.exerciseSubscription = this.trainingService.exercisesChanged.subscribe(
-      exercises => (this.exercises = exercises)
+      exercises => {
+        this.exercises = exercises;
+      }
     );
+    this.fetchExercises();
+  }
+
+  fetchExercises() {
     this.trainingService.fetchAvailableExercises();
   }
 
