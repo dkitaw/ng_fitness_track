@@ -40,7 +40,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
    * need that subscription.
    */
   ngOnDestroy() {
-    this.authSubscription.unsubscribe();
+    if (this.authSubscription) {
+      this.authSubscription.unsubscribe();
+    }
+    
   }
 
 }
