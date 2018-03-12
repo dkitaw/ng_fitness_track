@@ -7,6 +7,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AuthModule } from './auth/auth.module';
 import { SharedModule } from './shared/shared.module';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { StoreModule } from '@ngrx/store';
 
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
@@ -19,6 +20,7 @@ import { AuthService } from './auth/auth.service';
 import { TrainingService } from './training/training.service';
 import { environment } from '../environments/environment';
 import { UIService } from './shared/ui.service';
+import { appReducer } from './app.reducer';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,7 @@ import { UIService } from './shared/ui.service';
     FlexLayoutModule,
     AuthModule,
     SharedModule,
+    StoreModule.forRoot({ui: appReducer}),
     AngularFirestoreModule,
     AngularFireModule.initializeApp(environment.firebase)
   ],

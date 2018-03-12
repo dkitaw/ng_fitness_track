@@ -7,6 +7,8 @@ import { Router } from "@angular/router";
 import { AngularFireAuth } from 'angularfire2/auth';
 import { TrainingService } from '../training/training.service';
 import { UIService } from "../shared/ui.service";
+import { Store } from "@ngrx/store";
+import * as fromApp from '../app.reducer';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +19,8 @@ export class AuthService {
       private router: Router, 
       private afAuth: AngularFireAuth,
       private traningService: TrainingService,
-      private uiService: UIService
+      private uiService: UIService,
+      private store: Store<{ui: fromApp.State}>
     ) { }
 
   /**
@@ -41,12 +44,14 @@ export class AuthService {
   }
 
   registerUser(authData: AuthData) {
-    this.uiService.loadingStateChanged.next(true);              
+    //this.uiService.loadingStateChanged.next(true);     
+    this.store.dispatch({type: 'START_LOADING'});    
     this.afAuth.auth.createUserWithEmailAndPassword(
       authData.email, 
       authData.password
     ).then(result => {
-        this.uiService.loadingStateChanged.next(false);              
+        //this.uiService.loadingStateChanged.next(false);   
+        this.store.dispatch({type: 'STOP_LOADING'});               
     })
     .catch(error => {
       this.uiService.loadingStateChanged.next(false);
@@ -55,12 +60,14 @@ export class AuthService {
   }
 
   login(authData: AuthData) {
-    this.uiService.loadingStateChanged.next(true);             // set to true to indicate that we started loading
-    this.afAuth.auth.signInWithEmailAndPassword(    
+   // this.uiService.loadingStateChanged.next(true);             // set to true to indicate that we started loading
+   this.store.dispatch({type: 'START_LOADING'});        
+   this.afAuth.auth.signInWithEmailAndPassword(    
       authData.email, 
       authData.password
     ).then(result => {
-      this.uiService.loadingStateChanged.next(false);          // also emit an event once we're done  
+     // this.uiService.loadingStateChanged.next(false);          // also emit an event once we're done  
+     this.store.dispatch({type: 'STOP_LOADING'});                   
     })
     .catch(error => {
       this.uiService.loadingStateChanged.next(false);
