@@ -30,13 +30,13 @@
 
     <!-- Login Button -->
     <button 
-      *ngIf="!isLoading | async" 
+      *ngIf="!(isLoading | async)" 
       type="submit" 
       mat-raised-button 
       [disabled]="loginForm.invalid" 
       color="primary">Login</button>
     
     <!-- Spinner -->
-    <mat-spinner *ngIf="isLoading | async"></mat-spinner>
+    <mat-spinner *ngIf="isLoading$ | async"></mat-spinner>
   </form>
 </section>
